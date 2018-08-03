@@ -1,0 +1,38 @@
+public function inputproduk()
+    {
+        if (isset($_POST['inputproduk']))
+        {
+            $data1 = array(
+                'judul'             => $this->input->post('judul'),
+                'penulis'           => $this->input->post('penulis'),
+                'penerbit'          => $this->input->post('penerbit'),
+                'deskripsi'         => $this->input->post('deskripsi'),
+                'harga'             => $this->input->post('harga'),
+                'nama_kategori'     => $this->input->post('nama_kategori'),
+                'sinopsis'          => $this->input->post('sinopsis'),
+                'kode_produk'       => $_SESSION['kode_produk']
+            );
+
+            $this->form_validation->set_rules('judul','Judul','required');
+            $this->form_validation->set_rules('penulis','Penulis','required');
+            $this->form_validation->set_rules('penerbit','Penerbit','required');
+
+            if ($this->form_validation->run() != FALSE)
+            {
+               $id= $this->M_produk->tambahproduk($data1);
+                $data2 = array(
+                'id_spek' => $this->input->post('id_spek'),
+                'pjesma_pjesma_id' => $id
+            );
+                $this->pjesma_model->pjesma_pjesmu($data2);
+                redirect('pjesma', 'location');
+            }
+
+        }
+
+            $data['izvodjaci'] = $this->izvodjac_model->svi_izvodjaci();
+
+            $this->load->view('zaglavlje');
+            $this->load->view('pjesma_kreiraj', $data);
+            $this->load->view('podnozje');
+        }
