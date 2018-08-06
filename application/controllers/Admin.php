@@ -44,6 +44,7 @@ class Admin extends CI_Controller {
             $this->load->view('template/topbar');
             $this->load->view('template/sidebar');
             $this->load->view('v_tambahproduk',$this->data);
+            $this->load->view('template/js');
             $this->load->view('template/footer');
         }
         public function kategori(){     
@@ -54,126 +55,106 @@ class Admin extends CI_Controller {
             $this->load->view('v_tambahproduk',$data);
             $this->load->view('template/footer');
          }
-         function inputproduk(){
-         if(isset($_POST['kirim'])){
-        $this->load->library('form_validation');
-                    $judul = $this->input->post('judul');
-                    $penulis = $this->input->post('penulis');
-                    $penerbit = $this->input->post('penerbit');
-                    $deskripsi = $this->input->post('deskripsi');
-                    $harga= $this->input->post('harga');
-                    $sinopsis= $this->input->post('sinopsis');
-                    $tbl_kategori      = $this->input->post('nama_kategori');
-                    $number_of_files = sizeof($_FILES['userfile']['tmp_name']) ;
-                    $kode = $this->input->post('kode_produk');
-                    $file   =   $_FILES['userfile'];
-        
-        // Konfigurasi Upload Gambar*/
-                $config['upload_path']          = 'assets/images';
-                $config['allowed_types']        = 'gif|jpg|png|JPG|jpeg';
-                $config['max_size']             = '42024';
-                $config['max_width']            = '42600';
-                $config['max_height']           = '42200';
-                $this->load->library('upload', $config);
-
-                for ($i=0; $i < $number_of_files; $i++) { 
-                    $_FILES['userfile']['name'] = $file['name'][$i];
-                    $_FILES['userfile']['type'] = $file['type'][$i];
-                    $_FILES['userfile']['tmp_name'] = $file['tmp_name'][$i];
-                    $_FILES['userfile']['error'] = $file['error'][$i];
-                    $_FILES['userfile']['size'] = $file['size'][$i];
-                    $this->upload->do_upload();
-                    $datas = array(    'kode_produk'            => $kode, 
-                                      'judul'                   => $judul,
-                                      'penulis'                 => $penulis,
-                                      'penerbit'                => $penerbit,
-                                      'deskripsi'               => $deskripsi,
-                                      'harga'                   => $harga,
-                                      'sinopsis'                => $sinopsis,
-                                      'nama_kategori'           => $nama_kategori,
-                                      'gambar1'                    => $file['name'][0],
-                                      'gambar2'                    => $file['name'][1],
-                                      'gambar3'                    => $file['name'][2]
-                            );  
-                    }
-                    $sukses=$this->db->insert('tbl_produk', $datas);
-                   // $sukses=$this->db->insert('tbl_spek', $data2);
-                   // $sukses=$this->db->insert('tbl_stok', $data3);
-                    if($sukses){
-                        redirect('admin/produk');
-                        
-                    }else{
-
-                redirect('admin/produk');
-                    }
-    
-            }else{
-                redirect('admin/produk');
                 
-            }
-        }
-                  //  $data2 = array(   'id_spek'            => $id_spek, 
-                                     // 'sku'                => $sku,
-                                     // 'isbn'               => $isbn,
-                                     // 'berat'              => $berat,
-                                     // 'dimensi'            => $dimensi,
-                                     // 'halaman'            => $halaman,
-                                     // 'cover'              => $cover
-                                     
-                                 // );
-                    //$data3 = array(   'id_stok'            => $id_stok, 
-                                      //'kode_produk'        => $kode,
-                                     // 'id_spek'            => $id_spek,
-                                     // 'stok'               => $stok
-                                 // );
-                
-        /*public function input(){
+        public function inputproduk(){
         $this->load->model("M_produk");
-                $config['upload_path']          = 'assets/img';
-                $config['allowed_types']        = 'gif|jpg|png|JPG|jpeg';
-                $config['max_size']             = '42024';
-                $config['max_width']            = '42600';
-                $config['max_height']           = '42200';
-                $this->load->library('upload', $config);
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('judul','judul','required');
+        $this->form_validation->set_rules('penulis','penulis','required');
+        if($this->form_validation->run() != true ){
+            redirect("Admin/tambahproduk");
+        }
+            else{
 
-                for ($i=0; $i < $number_of_files; $i++) { 
-                    $_FILES['userfile']['name'] = $file['name'][$i];
-                    $_FILES['userfile']['type'] = $file['type'][$i];
-                    $_FILES['userfile']['tmp_name'] = $file['tmp_name'][$i];
-                    $_FILES['userfile']['error'] = $file['error'][$i];
-                    $_FILES['userfile']['size'] = $file['size'][$i];
-                    $this->load->library('upload', $config);
-                    $this->upload->do_upload();
+            $image = $_FILES['image'];
+            $config['upload_path']   = 'assets/img/upload/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size']      = 5140000;
+            $config['overwrite']      = true;
+            $config['encrypt_name'] = true;
+            $this->load->library('upload', $config);
+            $this->upload->overwrite = true;
+
+            $this->upload->do_upload('image');
+            $data = $this->upload->data();
+            var_dump($data);
             $d = array(
-                'judul'             => $this->input->post('judul'),
-                'penulis'           => $this->input->post('penulis'),
-                'penerbit'          => $this->input->post('penerbit'),
-                'deskripsi'         => $this->input->post('deskripsi'),
-                'harga'             => $this->input->post('harga'),
-                'nama_kategori'     => $this->input->post('nama_kategori'),
-                'sinopsis'          => $this->input->post('sinopsis'),
-                'sku'               => $this->input->post('sku'),
-                'isbn'              => $this->input->post('isbn'),
-                'berat'             => $this->input->post('berat'),
-                'dimensi'           => $this->input->post('dimensi'),
-                'halaman'           => $this->input->post('halaman'),
-                'cover'             => $this->input->post('cover'),
-                'stok'              => $this->input->post('stok'),
-                'gambar1'           =>  $file['name'][0],
-                'gambar2'           => $file['name'][1],
-                'gambar3'           => $file['name'][2],
-                'tanggal_input'     => date('Y-m-d'),
+                'kode_produk' =>$this->input->post('kode_produk'),
+                'judul' => $this->input->post('judul'),
+                'penulis' => $this->input->post('penulis'),
+                'penerbit' => $this->input->post('penerbit'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'harga' => $this->input->post('harga'),
+                'nama_kategori' => $this->input->post('nama_kategori'),
+                'sinopsis' => $this->input->post('sinopsis'),
+                'sku'       => $this->input->post('sku'),
+                'isbn'      => $this->input->post('isbn'),
+                'berat'     => $this->input->post('berat'),
+                'dimensi'   => $this->input->post('dimensi'),
+                'halaman'   => $this->input->post('halaman'),
+                'cover'     => $this->input->post('cover'),
+                'gambar1'  => 'assets/img/upload/'.$data['file_name'],
+                 'gambar2'  => 'assets/img/upload/'.$data['file_name'],
+                  'gambar3'  => 'assets/img/upload/'.$data['file_name'],
                 );
-            $this->data['kode_produk'] = $this->M_produk->tambahproduk($d);
-            $this->load->model("M_produk");
-            $datas['data']=$this->M_produk->getproduk();
+            $this->M_produk->tambahproduk($d);
+            redirect('admin/produk');   
+        }   
+    }
+        public function editproduk($kode_produk){
+            $this->load->library('form_validation');
+            $data['produk'] = $this->M_produk->editproduk($kode_produk);
             $this->load->view('template/header');
             $this->load->view('template/topbar');
             $this->load->view('template/sidebar');
-            $this->load->view('produk',$data);
+            $this->load->view('v_ubah',$this->data);
             $this->load->view('template/footer');
+        } 
+        public function updateproduk($kode_produk){
+        $this->load->model('M_berita');
+        $this->load->library('form_validation');
+        $id = $this->input->post('id');
+        $this->form_validation->set_rules('judul_berita','judul_berita','required');
+        $this->form_validation->set_rules('isi_berita','isi_berita','required');
+        if($this->form_validation->run() != true ){
+            $data['berita'] = $this->M_berita->update_berita($id);
+            $this->load->view('template/head');
+            $this->load->view('template/topbar');
+            $this->load->view('template/sidebar');
+            $this->load->view('admin/v_berita_edit',$data);
+            $this->load->view('template/foot');
+        }else{              
+            $image = $_FILES['image'];
+            $config['upload_path']   = './img/upload/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size']      = 5140000;
+            $config['overwrite']      = true;
+            $config['encrypt_name'] = true;
+            $this->load->library('upload', $config);
+            $this->upload->overwrite = true;
+            $this->upload->do_upload('image');
+            $data = $this->upload->data();
+            var_dump($data);
+             if($data['file_name']==""){
+                    $foto    = $this->input->post('image');
+                }else{
+                    $foto    = './img/upload/'.$data['file_name'];
+                }
+                $d = array(
+                'judul' => $this->input->post('judul_berita'),
+                'tanggal' => date('Y-m-d'),
+                'isi' => $this->input->post('isi_berita'),
+                'foto'  => $foto,
+                );
+                $this->M_berita->update_berita($d,$id);
+                redirect('admin/berita');
+            }           
+        }   
+        function produkhapus($kode_produk){
+        $this->M_produk->hapusproduk($kode_produk);
+        redirect('admin/produk');
         }
-    }*/
+
          function order(){
          $this->load->model('M_order');
           $data['order'] = $this->M_order->getorder()->result();
@@ -215,7 +196,5 @@ class Admin extends CI_Controller {
             $this->load->view('template/footer');
 
         }
-       }
-
-   
+}
 ?>

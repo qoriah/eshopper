@@ -27,44 +27,16 @@ protected $data=array();
         //gabungkan string dengan kode yang telah dibuat tadi
         return $kar.$kd;
    } 
-   function tambahproduk($dt){
-   			$data1=array(
-	      		'kode_produk'		=> $dt['kode_produk'],
-	      		'judul'				=> $dt['judul'],
-	      		'penulis' 			=> $dt['penulis'],
-				'penerbit' 			=> $dt['penerbit'],
-				'deskripsi' 		=> $dt['deskripsi'],
-				'harga' 			=> $dt['harga'],
-				'status' 			=> $dt['status'],
-				'nama_kategori' 	=> $dt['nama_kategori'],
-				'sinopsis' 			=> $dt['sinopsis'],
-				'tanggal_input' 	=> date('Y-m-d'),
-				'deskripsi' 		=> date('Y-m-d'),
-				'gambar1' 			=> $dt['gambar1'],
-				'gambar2' 			=> $dt['gambar2'],
-				'gambar3' 			=> $dt['gambar3'],
-				);
-
-	      	$data2=array(
-	      		'id_spek'	=> $dt['id_spek'],
-	      		'sku'		=> $dt['sku'],
-	      		'isbn'		=> $dt['isbn'],
-	      		'berat'		=> $dt['berat'],
-	      		'dimensi'	=> $dt['dimensi'],
-	      		'halaman'	=> $dt['halaman'],
-	      		'cover'		=> $dt['cover'],
-	      		);
-
-	      	$data3=array(
-	      		'id_stok'		=> $dt['id_stok'],
-	      		'kode_produk'	=> $dt['kode_produk'],
-	      		'id_spek'		=> $dt['id_spek'],
-	      		'stok'			=> $dt['stok'],
-	      		);
-	        	$this->db->insert('tbl_produk', $data1);
-	        	$this->db->insert('tbl_spek', $data2);	
-				$this->db->insert('tbl_stok', $data3);
-					        
+ 	function tambahproduk($data){
+		$this->db->insert('tbl_produk',$data);		
 	}
-
+	function editproduk($kode_produk){
+		$this->db->where('kode_produk',$kode_produk);
+		return $this->db->get('tbl_produk')->result();
+	}
+	function hapusproduk($kode_produk){
+		$this->db->where('kode_produk',$kode_produk);
+		$this->db->delete('tbl_produk');
+	}
+	
 }

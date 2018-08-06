@@ -8,7 +8,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'dashboard' || $this->uri->segment('2') == 'addnews'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == 'dashboard'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin') ?>"><i class="fas fa-home"></i>Home</a> 
                         </li>
                         <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'){ echo "active" ; } ?>">

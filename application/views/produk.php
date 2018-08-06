@@ -51,7 +51,9 @@
                                                 <th>Penerbit</th>
                                                 <th>Deskripsi</th>
                                                 <th>Harga</th>
-                                                <th>Gambar</th>
+                                                <th>Gambar 1</th>
+                                                <th>Gambar 2</th>
+                                                <th>Gambar 3</th>
                                                 <th>Kategori</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
@@ -68,15 +70,17 @@
                                         <td><?php echo $u->judul ?></td>
                                         <td><?php echo $u->penulis ?></td>
                                         <td><?php echo $u->penerbit ?></td>
-                                        <td><?php echo $u->deskripsi ?></td>
-                                        <td><?php echo $u->Harga ?></td>
-                                        <td><img  src='<?=base_url('assets');?>/img/<?php echo $u->img2 ?>'></td>
-                                        <td><?php echo $u->kategori ?></td>
+                                        <td><?= substr($u->deskripsi, 3, 100);?></td>
+                                        <td><?php echo $u->harga ?></td>
+                                        <td><img  src='<?php echo base_url($u->gambar1) ?>'></td>
+                                        <td><img  src='<?php echo base_url($u->gambar2) ?>'></td>
+                                        <td><img  src='<?php echo base_url($u->gambar3) ?>'></td>
+                                        <td><?php echo $u->nama_kategori ?></td>
                                         <td><?php echo $u->status ?></td>
                                          <td>
                                             <div class="table-data-feature">
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Delete" ><i class="zmdi zmdi-delete"></i></a> 
+                                          <a href="<?php echo base_url() ?>admin/editproduk/<?php echo $u->kode_produk ; ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
+                                          <a href="<?php echo base_url() ?>admin/produkhapus/<?php echo $u->kode_produk ; ?>" class="item" data-toggle="tooltip" data-placement="top" title="Delete" ><i class="zmdi zmdi-delete"></i></a> 
                                           </div>             
                                           </td>
                                          </tr>
@@ -85,6 +89,16 @@
                                 </table>
                             </div>
                         </div>
-                        <center>
-                            <?php echo $pagination ?>
-                        </center>
+                       <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Mizan. All rights reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
