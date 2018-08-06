@@ -8,7 +8,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="<?php if($this->uri->segment('2') == 'dashboard'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == 'admin'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin') ?>"><i class="fas fa-home"></i>Home</a> 
                         </li>
                         <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'){ echo "active" ; } ?>">
@@ -38,8 +38,8 @@
                             <a href="<?php echo site_url('admin/slide') ?>">
                                 <i class="fas fa-cogs"></i>Slide</a>
                         </li>
-                         <li class="<?php if($this->uri->segment('2') == 'ongkoskirim'){ echo "active" ; } ?>">
-                            <a href="<?php echo site_url('admin/ongkoskirim') ?>">
+                         <li class="<?php if($this->uri->segment('2') == 'ongkir'){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/ongkir') ?>">
                                 <i class="fas fa-cogs"></i>Ongkos Kirim</a>
                         </li>
                       

@@ -5,7 +5,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- DATA TABLE -->
-                                <h3 class="title-5 m-b-35">Data Order</h3>
+                                <h3 class="title-5 m-b-35">Data Ongkos Kirim</h3>
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-left">
                                         <div class="rs-select2--light rs-select2--md">
@@ -44,37 +44,25 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Invoice</th>
-                                                <th>Member</th>
-                                                <th>Email</th>
-                                                <th>No Hp</th>
-                                                <th>Total</th>
+                                                <th>Provinsi</th>
+                                                <th>Kota</th>
+                                                <th>Ongkir</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           <?php 
-                                            $no = 1;
-                                            foreach($order as $u){ 
-                                            ?>
                                         <tr>
+                                            <?php 
+                            $no=1;
+                            $sql="SELECT * FROM tbl_provinsi left join tbl_kota 
+                            on tbl_provinsi.id_provinsi=tbl_kota.id_provinsi ";
+                            $dts=$this->db->query($sql);
+                            foreach ($dts->result() as $row) {
+                            ?>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $u->invoice ?></td>
-                                        <td><?php 
-                                            if($u->kode_member == NULL){
-                                              ?>
-                                              <b class="btn btn-danger btn-rounded waves-effect waves-light">Non Member</b>
-                                              <?php
-                                            }else{
-                                              ?>
-                                              <b class="btn btn-success btn-rounded waves-effect waves-light">Member</b>
-
-                                              <?php
-                                            }
-                                         ?></td>
-                                        <td><?php echo $u->email ?></td>
-                                        <td><?php echo $u->no_hp ?></td>
-                                        <td><?php echo $u->total ?></td>
+                                        <td><?php echo $row->provinsi ?></td>
+                                        <td><?php echo $row->kota ?></td>
+                                        <td><?php echo $row->ongkos ?></td>
                                         <td>
                                             <div class="table-data-feature">
                                           <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
@@ -87,4 +75,16 @@
                                 </table>
                             </div>
                         </div>
-                      
+                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Mizan. All rights reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
