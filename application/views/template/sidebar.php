@@ -11,8 +11,12 @@
                         <li class="<?php if($this->uri->segment('2') == 'admin'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin') ?>"><i class="fas fa-home"></i>Home</a> 
                         </li>
-                        <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'|| $this->uri->segment('2') == 'editproduk'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/produk') ?>"><i class="fas fa-table"></i>Master</a> 
+                        </li>
+                        <li class="<?php if($this->uri->segment('2') == 'stok'){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/stok') ?>">
+                                <i class="fas fa-table"></i>Update Stok</a>
                         </li>
                         <li class="<?php if($this->uri->segment('2') == 'order'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/order') ?>">
@@ -34,11 +38,11 @@
                             <a href="<?php echo site_url('admin/pengaturan') ?>">
                                 <i class="fas fa-cogs"></i>Pengaturan</a>
                         </li>
-                        <li class="<?php if($this->uri->segment('2') == 'slide'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == 'slide'|| $this->uri->segment('2') == 'editslide'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/slide') ?>">
                                 <i class="fas fa-cogs"></i>Slide</a>
                         </li>
-                         <li class="<?php if($this->uri->segment('2') == 'ongkir'){ echo "active" ; } ?>">
+                         <li class="<?php if($this->uri->segment('2') == 'ongkir'|| $this->uri->segment('2') == 'inputprovinsi'|| $this->uri->segment('2') == 'tambahkota'|| $this->uri->segment('2') == 'edit_kota'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/ongkir') ?>">
                                 <i class="fas fa-cogs"></i>Ongkos Kirim</a>
                         </li>

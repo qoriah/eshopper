@@ -14,8 +14,9 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Slide</th>
-                                                <th>Keterangan</th>
+                                                <th>Slide 1</th>
+                                                <th>Slide 2</th>
+                                                <th>Slide 3</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -26,12 +27,12 @@
                                             ?>
                                         <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $u->slide ?></td>
-                                        <td><img  src='<?=base_url('assets');?>/img/<?php echo $u->slide ?>' class="img-responsive" style="width: 200px"></td>
+                                        <td> <img  src='<?php echo base_url($u->slide1) ?>'></td>
+                                        <td><img  src='<?php echo base_url($u->slide2) ?>'></td>
+                                         <td><img  src='<?php echo base_url($u->slide3) ?>'></td>
                                          <td>
                                             <div class="table-data-feature">
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Delete" ><i class="zmdi zmdi-delete"></i></a> 
+                                          <a href="<?php echo base_url() ?>admin/editslide/<?php echo $u->id_slide ; ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
                                           </div>             
                                           </td>
                                          </tr>
@@ -44,9 +45,16 @@
                     </div>
                   </div>
                 </section>
-                        <center>
-                            <?php echo $pagination ?>
-                        </center>
-                        <?php
-$this->load->view('template/js');
-?>
+                       <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Mizan. All rights reserved.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>

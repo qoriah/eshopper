@@ -2,7 +2,8 @@
 class M_produk extends CI_Model{
 protected $data=array();
 	function getproduk(){
-		return $this->db->get('tbl_produk');
+	$this->db->order_by('kode_produk', 'ASC');
+	return $this->db->get('tbl_produk');
 	}
 	function getkategori()
 	{
@@ -11,6 +12,9 @@ protected $data=array();
 	}
 	function getslide(){
 		return $this->db->get('tbl_slide');
+	}function editslide($id_slide){
+		$this->db->where('id_slide',$id_slide);
+		return $this->db->get('tbl_slide')->result();
 	}
 	function getkodeunik($table) { 
         $q = $this->db->query("SELECT MAX(RIGHT(kode_produk,4)) AS idmax FROM ".$table);
@@ -34,9 +38,20 @@ protected $data=array();
 		$this->db->where('kode_produk',$kode_produk);
 		return $this->db->get('tbl_produk')->result();
 	}
+	function updateproduk($data,$kode_produk){
+		$this->db->where('kode_produk',$kode_produk);
+		$this->db->update('tbl_produk',$data);
+	}
 	function hapusproduk($kode_produk){
 		$this->db->where('kode_produk',$kode_produk);
 		$this->db->delete('tbl_produk');
+	}
+	function tambahprovinsi($data,$table){
+		$this->db->insert($table,$data);
+	}
+	function hapusprovinsi($id_provinsi){
+		$this->db->where('id_provinsi',$id_provinsi);
+		$this->db->delete('tbl_provinsi');
 	}
 	
 }

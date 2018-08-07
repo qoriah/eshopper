@@ -140,15 +140,6 @@
                                                     <input type="text" id="cover" name="cover" placeholder="Isi Jenis Cover Buku" class="form-control" >
                                                 </div>
                                             </div>
-                                          
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="stok" class=" form-control-label">Stok Buku</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="stok" name="stok" placeholder="Isi Stok Buku" class="form-control" >
-                                                </div>
-                                            </div>
                                             <div class="card-header">
                                                 <strong>Gambar Buku</strong>
                                             </div>
@@ -156,9 +147,8 @@
                                               <div class="form-group">
                                         <label class="control-label col-sm-2" for="fieldtwo" class="form-control">Gambar</label>
                                        <td>
-                                        <input type="file"  class="form-control" id="gambar1" name="image[]" required>
-                                        <input type="file"  class="form-control" id="gambar2" name="image[]" required>
-                                        <input type="file"  class="form-control" id="gambar3" name="image[]" required>
+                                       <input type="file"  class="form-control" id="gambar1" name="image" required>
+                                      
                                         </td>
                                     </div>
                                            <?php echo form_close(); ?>

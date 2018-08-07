@@ -51,11 +51,8 @@
                                                 <th>Penerbit</th>
                                                 <th>Deskripsi</th>
                                                 <th>Harga</th>
-                                                <th>Gambar 1</th>
-                                                <th>Gambar 2</th>
-                                                <th>Gambar 3</th>
+                                                <th>Gambar</th>
                                                 <th>Kategori</th>
-                                                <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -73,10 +70,7 @@
                                         <td><?= substr($u->deskripsi, 3, 100);?></td>
                                         <td><?php echo $u->harga ?></td>
                                         <td><img  src='<?php echo base_url($u->gambar1) ?>'></td>
-                                        <td><img  src='<?php echo base_url($u->gambar2) ?>'></td>
-                                        <td><img  src='<?php echo base_url($u->gambar3) ?>'></td>
                                         <td><?php echo $u->nama_kategori ?></td>
-                                        <td><?php echo $u->status ?></td>
                                          <td>
                                             <div class="table-data-feature">
                                           <a href="<?php echo base_url() ?>admin/editproduk/<?php echo $u->kode_produk ; ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>

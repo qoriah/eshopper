@@ -28,15 +28,8 @@
                                             <i class="zmdi zmdi-filter-list"></i>filters</button>
                                     </div>
                                     <div class="table-data__tool-right">
-                                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                            <i class="zmdi zmdi-plus"></i>add item</button>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                            <select class="js-select2" name="type">
-                                                <option selected="selected">Export</option>
-                                                <option value="">Option 1</option>
-                                                <option value="">Option 2</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
+                                        <a href="<?php echo site_url('admin/inputprovinsi') ?>" class="au-btn au-btn-icon au-btn--green au-btn--small"> <i class="zmdi zmdi-plus"></i>Tambah Provinsi</a>
+                                           <a href="<?php echo site_url('admin/tambahkota') ?>" class="au-btn au-btn-icon au-btn--green au-btn--small"> <i class="zmdi zmdi-plus"></i>Tambah Kota</a>
                                         </div>
                                     </div>
                                 </div>
@@ -65,8 +58,8 @@
                                         <td><?php echo $row->ongkos ?></td>
                                         <td>
                                             <div class="table-data-feature">
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
-                                          <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Delete" ><i class="zmdi zmdi-delete"></i></a> 
+                                          <a href="<?php echo base_url() ?>admin/edit_kota/<?php echo $row->id_kota ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>
+                                          <a href="<?php echo base_url() ?>admin/hapuskota/<?php echo $row->id_kota ?>" class="item" data-toggle="tooltip" data-placement="top" title="Delete" ><i class="zmdi zmdi-delete"></i></a> 
                                           </div>             
                                           </td>
                                       </tr>

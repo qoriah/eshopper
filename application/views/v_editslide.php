@@ -1,5 +1,5 @@
 
-	<div class="main-content">
+	 <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="row">
@@ -9,27 +9,33 @@
                                     <div class="card-header">
                                         <strong>Update Slide</strong>
                                     </div>
-							<?php echo validation_errors();
-						 echo form_open_multipart('admin/halamanupdate'); 
+							 <?php echo validation_errors();
+                        echo form_open_multipart('admin/updateslide'); 
 
-						foreach($halaman as $a){ 
-						?>
-						<input type="hidden" name="iddepan" class="form-control" value="<?php echo $a->iddepan ?>">
-						<div class="form-group">
-							<label for="judul">Judul Foto</label>
-							<input type="text" class="form-control" name="judul" id="judul" value="<?php echo $a->judul ?>" >
-						</div>
-						<div class="form-group">
-							<label for="photo">Foto</label> 
-							<td>
-        					<input type="file"  class="form-control" id="photo" name="image"><?php echo $a->photo ?>
-      						</td>
-						</div>
-						<div class="form-group">
-							 <button class="btn btn-sm btn-primary save-artikel">Update</button>
-							
-							&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-
+                    foreach($slide as $row){ 
+                        ?>
+						<input type="hidden" name="id_slide" class="form-control" value="<?php echo $row->id_slide ?>">
+					
+                            <div class="card-body card-block">
+                            <div class="row form-group">
+                                 <label class="control-label col-sm-2" for="fieldtwo" class="form-control">Gambar</label>
+                                  <img src="<?php echo base_url($row->slide1) ?>" style="width: 110px; height: 150px;">
+                                  <img src="<?php echo base_url($row->slide2) ?>" style="width: 110px; height: 150px;">
+                                  <img src="<?php echo base_url($row->slide3) ?>" style="width: 110px; height: 150px;">        
+                            </div>
+                                <div class="col-sm-5">
+                                  <input type="file" id="input-file-now" class="dropify" name="userfile[]"  value="<?php echo $row->slide1 ?>"required />
+                                
+					            <input type="file" id="input-file-now" class="dropify" name="userfile[]"  value="<?php echo $row->slide2 ?>" required />
+					          
+					            <input type="file" id="input-file-now" class="dropify" name="userfile[]"  value="<?php echo $row->slide3 ?> " required />
+                                 </div> 
+                                 
+						  <div class="card-footer">
+							<button type="submit" name="kirim" class="btn btn-primary btn-sm">
+                               <i class="fa fa-dot-circle-o"></i> Update
+                            </button>
+	
 						</div>
 
 					</div>
@@ -38,10 +44,4 @@
 			<div class="box-body">
 			</div>
 		</div>
-		
-
-
 	</section>
-	<?php
-$this->load->view('template/js');
-?>
