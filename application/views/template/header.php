@@ -14,26 +14,27 @@
 
     <!-- Fontfaces CSS-->
      <link rel="shortcut icon" type="image/icon" href="<?php echo base_url('assets/img/shop.png')?>"/>
-    <link href="<?php echo base_url('assets');?>/css/font-face.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets') ?>/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url('assets');?>/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/css/font-face.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('') ?>/css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url('');?>/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 
     <!-- Bootstrap CSS-->
-    <link href="<?php echo base_url('assets');?>/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
 
     <!-- Vendor CSS-->
-    <link href="<?php echo base_url('assets');?>/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/wow/animate.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/slick/slick.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="<?php echo base_url('assets');?>/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
-
+    <link href="<?php echo base_url('');?>/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('assets/vendor/datatables/datatables.min.css')?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url('assets/vendor/datatables/plugins/bootstrap/datatables.bootstrap.css')?>" rel="stylesheet" type="text/css" />
     <!-- Main CSS-->
-    <link href="<?php echo base_url('assets');?>/css/theme.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/css/theme.css" rel="stylesheet" media="all">
 
 </head>
 
@@ -58,11 +59,15 @@
              <nav class="navbar-mobile">
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
-                              <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'dashboard' || $this->uri->segment('2') == 'addnews'){ echo "active" ; } ?>">
+                              <li class="<?php if($this->uri->segment('2') == 'admin'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin') ?>"><i class="fas fa-home"></i>Home</a> 
                         </li>
-                        <li class="<?php if($this->uri->segment('2') == 'produk'){ echo "active" ; } ?>">
-                       <a href="<?php echo site_url('admin/produk') ?>"><i class="fas fa-table"></i>Master</a> 
+                        <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'|| $this->uri->segment('2') == 'editproduk'){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/produk') ?>"><i class="fas fa-table"></i>Master</a> 
+                        </li>
+                        <li class="<?php if($this->uri->segment('2') == 'stok'|| $this->uri->segment('2') == 'editstok'){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/stok') ?>">
+                                <i class="fas fa-table"></i>Update Stok</a>
                         </li>
                         <li class="<?php if($this->uri->segment('2') == 'order'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/order') ?>">
@@ -80,19 +85,13 @@
                             <a href="<?php echo site_url('admin/laporan') ?>">
                                 <i class="fas fa-print"></i>Laporan</a>
                         </li>
-                         <li class="<?php if($this->uri->segment('2') == 'pengaturan'){ echo "active" ; } ?>">
-                            <a href="<?php echo site_url('admin/pengaturan') ?>">
-                                <i class="fas fa-cogs"></i>Pengaturan</a>
-                        </li>
-                        <li class="<?php if($this->uri->segment('2') == 'slide'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == 'slide'|| $this->uri->segment('2') == 'editslide'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/slide') ?>">
                                 <i class="fas fa-cogs"></i>Slide</a>
                         </li>
-                         <li class="<?php if($this->uri->segment('2') == 'ongkoskirim'){ echo "active" ; } ?>">
-                            <a href="<?php echo site_url('admin/ongkoskirim') ?>">
+                         <li class="<?php if($this->uri->segment('2') == 'ongkir'|| $this->uri->segment('2') == 'inputprovinsi'|| $this->uri->segment('2') == 'tambahkota'|| $this->uri->segment('2') == 'edit_kota'){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/ongkir') ?>">
                                 <i class="fas fa-cogs"></i>Ongkos Kirim</a>
-                        </li>
-                      
                         </li>
                     </ul>
                 </div>

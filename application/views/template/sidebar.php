@@ -14,7 +14,7 @@
                         <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'|| $this->uri->segment('2') == 'editproduk'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/produk') ?>"><i class="fas fa-table"></i>Master</a> 
                         </li>
-                        <li class="<?php if($this->uri->segment('2') == 'stok'){ echo "active" ; } ?>">
+                        <li class="<?php if($this->uri->segment('2') == 'stok'|| $this->uri->segment('2') == 'editstok'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/stok') ?>">
                                 <i class="fas fa-table"></i>Update Stok</a>
                         </li>
@@ -33,10 +33,6 @@
                          <li class="<?php if($this->uri->segment('2') == 'laporan'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/laporan') ?>">
                                 <i class="fas fa-print"></i>Laporan</a>
-                        </li>
-                         <li class="<?php if($this->uri->segment('2') == 'pengaturan'){ echo "active" ; } ?>">
-                            <a href="<?php echo site_url('admin/pengaturan') ?>">
-                                <i class="fas fa-cogs"></i>Pengaturan</a>
                         </li>
                         <li class="<?php if($this->uri->segment('2') == 'slide'|| $this->uri->segment('2') == 'editslide'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/slide') ?>">

@@ -13,10 +13,12 @@
                                         <?php echo validation_errors() ?>
                                         <?php echo form_open_multipart('admin/inputproduk'); ?>
                                        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data" >
-                                            <div class="form-group">
-                                                <label class="control-label col-sm-2" for="fieldtwo">Kode Produk</label>
-                                                <div class="col-sm-5">
-                                                <input type='text' name='kode_produk' value="<?php echo $kodeunik ?>" style="color:red" class='form-control' required='required' disabled="disable">
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                               <label for="kode_produk" class=" form-control-label">Kode Produk</label>
+                                           </div>
+                                            <div class="col-12 col-md-9">
+                                                <input type='text' name='kode_produk' value="<?php echo $kodeunik ?>" style="color:red" class='form-control' disabled="disable">
                                                       <input type="hidden" name="kode_produk" value="<?php echo $kodeunik ?>">
                                                 </div>
                                             </div>
@@ -137,9 +139,35 @@
                                                     <label for="cover" class=" form-control-label">Jenis Cover</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input type="text" id="cover" name="cover" placeholder="Isi Jenis Cover Buku" class="form-control" >
-                                                </div>
+                                            <select class='form-control' name='cover' required>
+                                              <option value='Hard Cover'>Hard Cover</option>
+                                              <option value='Soft cover'>Soft Cover</option>
+                                            </select>
                                             </div>
+                                        </div>
+                                        <div class="row form-group">
+                                             <div class="col col-md-3">
+                                          <label  for="jenis" class=" form-control-label">Jenis Buku</label>
+                                      </div>
+                                          <div class="col-12 col-md-9">
+                                            <select class='form-control' name='jenis' required>
+                                              <option value='Terbaru'>Terbaru</option>
+                                              <option value='Terlaris'>Terlaris</option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        <div class="row form-group">
+                                            <div class="col col-md-3">
+                                          <label  for="status" class=" form-control-label">Status</label>
+                                      </div>
+                                         <div class="col-12 col-md-9">
+                                            <select class='form-control' name='status' required>
+                                              <option value='1'>Aktif</option>
+                                              <option value='0'>Non Aktif</option>
+                                            </select>
+                                          </div>
+                                      </div>
+                            
                                             <div class="card-header">
                                                 <strong>Gambar Buku</strong>
                                             </div>

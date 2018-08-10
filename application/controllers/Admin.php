@@ -9,6 +9,7 @@ class Admin extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->library('session');    
+        $this->load->library('datatables');
         $this->load->model('M_user');
         $this->load->model('M_produk');
         $this->data['tbl_kategori'] = $this->M_produk->getkategori();
@@ -17,15 +18,14 @@ class Admin extends CI_Controller {
        }
 
         function index() {
-
         $this->load->view('template/header');
         $this->load->view('template/topbar');
         $this->load->view('template/sidebar');
         $this->load->view('home',$datas);
         $this->load->view('template/footer');
-
         }
         function produk(){
+        $this->load->library('datatables');
          $this->load->model('M_produk');
         $data['produk'] = $this->M_produk->getproduk()->result();
             $this->load->view('template/header');
@@ -77,22 +77,24 @@ class Admin extends CI_Controller {
             $data = $this->upload->data();
             var_dump($data);
             $d = array(
-                'kode_produk' =>$this->input->post('kode_produk'),
-                'judul' => $this->input->post('judul'),
-                'penulis' => $this->input->post('penulis'),
-                'penerbit' => $this->input->post('penerbit'),
-                'deskripsi' => $this->input->post('deskripsi'),
-                'harga' => $this->input->post('harga'),
+                'kode_produk'   =>$this->input->post('kode_produk'),
+                'judul'         => $this->input->post('judul'),
+                'penulis'       => $this->input->post('penulis'),
+                'penerbit'      => $this->input->post('penerbit'),
+                'deskripsi'     => $this->input->post('deskripsi'),
+                'harga'         => $this->input->post('harga'),
                 'nama_kategori' => $this->input->post('nama_kategori'),
-                'sinopsis' => $this->input->post('sinopsis'),
-                'sku'       => $this->input->post('sku'),
-                'isbn'      => $this->input->post('isbn'),
-                'berat'     => $this->input->post('berat'),
-                'dimensi'   => $this->input->post('dimensi'),
-                'halaman'   => $this->input->post('halaman'),
-                'cover'     => $this->input->post('cover'),
-                'stok'      => $this->input->post('stok'),
-                'gambar1'  => 'assets/img/upload/'.$data['file_name'],
+                'sinopsis'      => $this->input->post('sinopsis'),
+                'sku'           => $this->input->post('sku'),
+                'isbn'          => $this->input->post('isbn'),
+                'berat'         => $this->input->post('berat'),
+                'dimensi'       => $this->input->post('dimensi'),
+                'halaman'       => $this->input->post('halaman'),
+                'cover'         => $this->input->post('cover'),
+                 'status'       => $this->input->post('status'),
+                  'jenis'       => $this->input->post('jenis'),
+                'tanggalinput'  => date('Y-m-d'),
+                'gambar1'       => 'assets/img/upload/'.$data['file_name'],
               
                 );
             $this->M_produk->tambahproduk($d);
@@ -100,6 +102,8 @@ class Admin extends CI_Controller {
         }  
     }
     public function editproduk($kode_produk){
+            $table = 'tbl_produk';
+            $this->data['kodestok'] = $this->M_produk->getkodeunik($table);
             $data['produk'] = $this->M_produk->editproduk($kode_produk);
             $data['tbl_kategori'] = $this->M_produk->getkategori();
             $this->load->view('template/header');
@@ -152,9 +156,11 @@ class Admin extends CI_Controller {
                 'berat'     => $this->input->post('berat'),
                 'dimensi'   => $this->input->post('dimensi'),
                 'halaman'   => $this->input->post('halaman'),
-                'cover'     => $this->input->post('cover'),
-                'stok'      => $this->input->post('stok'),
-                'gambar1'  => $gambar1,
+                 'cover'     => $this->input->post('cover'),
+                 'status'     => $this->input->post('status'),
+                  'jenis'     => $this->input->post('jenis'),
+                'gambar1'  => 'assets/img/upload/'.$data['file_name'],
+                'tanggalinput' => date('Y-m-d'),
                 );
                 $this->M_produk->updateproduk($d,$kode_produk);
                 redirect('admin/produk');
@@ -164,7 +170,71 @@ class Admin extends CI_Controller {
         $this->M_produk->hapusproduk($kode_produk);
         redirect('admin/produk');
         }
+        function stok(){
+         $this->load->model('M_produk');
+        $data['produk']=$this->M_produk->getstok();
+            $this->load->view('template/header');
+            $this->load->view('template/topbar');
+            $this->load->view('template/sidebar');
+            $this->load->view('v_stok',$data);
+            $this->load->view('template/footer');
 
+        }
+        public function editstok($kode_produk){
+            $data['stok'] = $this->M_produk->editstok($kode_produk);
+             $data['kodestok'] = $this->M_produk->getstok($table); 
+            $this->load->view('template/header');
+            $this->load->view('template/topbar');
+            $this->load->view('template/sidebar');
+            $this->load->view('v_updatestok',$data);
+            $this->load->view('template/footer');
+        }
+        public function tambahstok($kode_produk){
+            $data['stok'] = $this->M_produk->editstok($kode_produk);
+             $data['kodestok'] = $this->M_produk->getstok($table); 
+            $this->load->view('template/header');
+            $this->load->view('template/topbar');
+            $this->load->view('template/sidebar');
+            $this->load->view('v_tambahstok',$data);
+            $this->load->view('template/footer');
+        }
+        function prosestambahstok(){
+        $this->load->model('M_produk');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('stok','stok','required');
+        if($this->form_validation->run() != true ){
+             redirect("Admin/tambahstok");
+        }else{              
+                $d = array('kode_produk' => $this->input->post('kode_produk'),
+                 'id_stok' => $this->input->post('id_stok'),   
+                'stok' => $this->input->post('stok'),
+                );
+                 $this->M_produk->tambahstok($d);
+                redirect('admin/stok');
+            }           
+        }   
+        function proseseditstok(){
+        $this->load->model('M_produk');
+        $this->load->library('form_validation');
+        $kode_produk = $this->input->post('kode_produk');
+        $id_stok = $this->input->post('id_stok');
+        $this->form_validation->set_rules('stok','stok','required');
+        if($this->form_validation->run() != true ){
+            $data['produk'] = $this->M_produk->updatestok($kode_produk);
+            $this->load->view('template/header');
+            $this->load->view('template/topbar');
+            $this->load->view('template/sidebar');
+            $this->load->view('v_updatestok',$data);
+            $this->load->view('template/footer');
+        }else{              
+                $d = array('kode_produk' => $this->input->post('kode_produk'),
+                 'id_stok' => $this->input->post('id_stok'),   
+                'stok' => $this->input->post('stok'),
+                );
+                $this->M_produk->updatestok($d,$kode_produk);
+                redirect('admin/stok');
+            }           
+        }   
          function order(){
          $this->load->model('M_order');
           $data['order'] = $this->M_order->getorder()->result();

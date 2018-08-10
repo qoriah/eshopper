@@ -143,19 +143,47 @@
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="cover" class=" form-control-label">Jenis Cover</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input type="text" id="cover" name="cover" value="<?php echo $row->cover ?>" placeholder="Isi Jenis Cover Buku" class="form-control" required="">
-                                                </div>
+                                                 <div class="col col-md-3">
+                                              <label  for="cover" class=" form-control-label">Jenis Cover</label>
+                                          </div>
+                                               <div class="col-12 col-md-9">
+                                                <select class='form-control' name='cover'>
+                                                  <option value="<?php echo $cover?>" selected><?php echo $cover?></option>
+                                                  <option value='Hard Cover'>Hard Cover</option>
+                                                  <option value='Soft Cover'>Soft Cover</option>
+                                                </select>
+                                              </div>
                                             </div>
+                                            <div class="row form-group">
+                                                 <div class="col col-md-3">
+                                              <label for="jenis" class=" form-control-label">Jenis Buku</label>
+                                          </div>
+                                               <div class="col-12 col-md-9">
+                                                <select class='form-control' name='jenis'>
+                                                  <option value="<?php echo $jenis?>" selected><?php echo $jenis?></option>
+                                                  <option value='Terbaru'>Terbaru</option>
+                                                  <option value='Terlaris'>Terlaris</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                 <div class="col col-md-3">
+                                          <label for="status" class=" form-control-label">Status</label>
+                                      </div>
+                                           <div class="col-12 col-md-9">
+                                            <select class='form-control' name='status'>
+                                              <option value="<?php echo $status?>" selected></option>
+                                              <option value='1'>Aktif</option>
+                                              <option value='0'>Non Aktif</option>
+                                            </select>
+                                          </div>
+                                        </div>
                                             <div class="card-header">
                                                 <strong>Gambar Buku</strong>
                                             </div>
                                              <div class="card-body card-block">
                                               <div class="row form-group">
-                                                 <label class="control-label col-sm-2" for="fieldtwo" class="form-control">Gambar</label>
+                                                 <label class="control-label col-sm-2" for="fieldtwo" class="form-control" >Gambar</label>
                                             <img src="<?php echo base_url($row->gambar1) ?>" style="width: 110px; height: 150px;">
                                             </div>
                                              <div class="col-sm-5">
