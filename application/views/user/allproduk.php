@@ -31,11 +31,11 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<a href="home/detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" />
+											<a href="detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
 										
 											<h4><?php echo $row->judul ?></h4>
 											<p class="uang"><?php echo $row->harga ?></p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="detail/<?php echo $row->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 								</div>
 							</div>

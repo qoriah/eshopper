@@ -1,621 +1,115 @@
-<div class="breadcrumbs">
-		<div class="container">
-			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
-				<li><a href="index.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-				<li class="active">Checkout</li>
-			</ol>
-		</div>
-	</div>
-<!---->
-<div class="container">
-	<div class="check-out">
-		<h2>Checkout</h2>
-    	    <table  border="1">
-		  <tr>
-			<th>No.</th>
-			<th>Barang</th>
-			<th>Jumlah</th>		
-			<th>Satuan</th>
-			<th>Harga</th>
-			<th>Berat</th>
-			<th>Sub total</th>
-			<th>Option</th>
-		  </tr>
-		  <!-- 
-				'id'      => kode_produk,
-				'qty'     => jumlah_beli,
-				'price'   => jenis,
-				'name'    => id_ukuran'
-		   -->
-		  <tr>
-		  	  <form action="index.php/web/selesai" method="post"> 
 
-		  <?php 
-			$total=0;
-			$item=1;
-		  foreach($this->cart->contents() as $items): ?>
-		  <td><?php echo $item++; ?></td>
-			<td >
-			<?php $sql    = " SELECT tbl_satuan.harga_member, tbl_satuan.harga_nonmember, tbl_produk.kode_produk, tbl_produk.nama_produk, tbl_produk.nama_kategori, tbl_produk.img1, tbl_produk.img2, tbl_produk.img3, tbl_produk.keterangan, tbl_produk.type, tbl_produk.berat, tbl_produk.aktif FROM tbl_satuan, tbl_produk WHERE tbl_satuan.kode_produk = tbl_produk.kode_produk AND tbl_satuan.kode_produk='$items[id]'";
-				  $result = $this->db->query($sql);
-				  foreach ($result->result() as $v) {
-				  	
-				  }
-			 ?>
-			 <input type="hidden" name="kode_produk[]" value="<?php echo $items['id']; ?>">
-			 <input type="hidden" name="jumlah_beli[]" value="<?php echo $items['qty']; ?>">
-			 <input type="hidden" name="jenis[]" value="<?php echo $items['price']; ?>">
-			 <input type="hidden" name="ukuran[]" value="<?php echo $items['name']; ?>">
-			 <input type="hidden" name="gambar[]" value="<?php echo $v->img1 ?>">
-			<img width="100" src="assets/images/<?php echo $v->img1 ?>" >
-				</td>
-			<td><?php echo $items['qty'] ?></td>
-			<td>
-				<?php 
-				/*
-				if($items['price'] == 1){
-						echo "Pcs";
-					}elseif(($items['price'] == 12)){
-						echo "Lusin";
-					}elseif(($items['price'] == 20)){
-						echo "Kodi";
-					}elseif(($items['price'] == 6)){
-						echo "Per6pcs";
-					}
-					*/
-				$j = $items['price'];
-				$sql = "SELECT satuan FROM tbl_jenissatuan WHERE nilai='$j' ";
-				$hasil = $this->db->query($sql)->row();
-				echo $hasil->satuan;
+<section class="content"> 
+  <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                      
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- DATA TABLE -->
+                                <h3>Check Out</h3>
+                                <div class="table-data__tool">
+                                    <div class="table-data__tool-right">
+                <?php if ($this->cart->total_items()) { ?>
+                    <div class="portlet-body">
+                        <table id="example" class="table table-striped table-bordered table-news" cellspacing="0" width="100%">
+                              <thead>
+                        <tr>
+                            <th>Kode produk</th>
+                            <th>Judul</th>
+                            <th>Harga</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>Remove</th>
+                        </tr>
+                          </thead>
+                        <tbody>
+                        <?php
+                        $i = 0;
+                        foreach ($cart_contents as $cart_items) {
+                            $i++;
+                            ?>
+                            <tr>
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $cart_items['name'] ?></td>
+                                <td>Rp. <?php echo $this->cart->format_number($cart_items['price']) ?></td>
+                                <td>
+                                     <?php echo validation_errors() ?>
+                                        <?php echo form_open_multipart('update/cart'); ?>
+                                    <form action="<?php echo base_url('update/cart'); ?>" method="post">
+                                        <input type="number" name="qty" value="<?php echo $cart_items['qty'] ?>"/>
+                                        <input type="hidden" name="rowid" value="<?php echo $cart_items['rowid'] ?>"/>
+                                        <input type="submit" name="submit" value="Update"/>
+                                    </form>
+                                    <?php echo form_close(); ?>
+                                </td>
+                                <td>Rp. <?php echo $this->cart->format_number($cart_items['subtotal']) ?></td>
+                                <td>
+                                    <?php echo validation_errors() ?>
+                                        <?php echo form_open_multipart('remove/cart'); ?>
+                                    <form action="<?php echo base_url('remove/cart'); ?>" method="post">
+                                        <input type="hidden" name="rowid" value="<?php echo $cart_items['rowid'] ?>"/>
+                                        <input type="submit" name="submit" value="X"/>
+                                    </form>
 
-					 ?>
-			</td>
-			<td>
-				<?php if($this->session->userdata('kode_member')){ ?>
-				<?php 
-				/*
-				$mysql = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' limit 1";
-					   $rs=$this->db->query($mysql);
-					   foreach($rs->result() as $r){
-					   	if($items['price'] == 1){
-					   		$harga=$v->harga_member;
-					   		echo 'Rp. '.number_format($harga,2);
-
-					   }elseif(($items['price'] == 12)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='12' limit 1";
-					   		$b =$this->db->query($a);
-					   		foreach($b->result() as $c){
-					   			$harga=$c->harga_member;
-					   			echo 'Rp. '.number_format($harga,2);
-
-					   		}
-						}elseif(($items['price'] == 20)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='20' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$harga=$f->harga_member;
-					   			echo 'Rp. '.number_format($harga,2);
-
-					   		}
-						}elseif(($items['price'] == 6)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='6' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$harga=$f->harga_member;
-					   			echo 'Rp. '.number_format($harga,2);
-
-					   		}
-						} 
-						
-					   } */
-					   $j = $items['price'];
-					   $kd = $v->kode_produk;
-					   $sql = "SELECT * FROM tbl_satuan WHERE kode_produk='$kd' AND jenis='$j' LIMIT 1 ";
-					   $hasil = $this->db->query($sql)->row();
-						$harga = $hasil->harga_member;
-						echo 'Rp. '.number_format($harga,2);
-
-				 ?>
-				<input type="hidden" name="harga[]" value="<?php echo $harga ?>">
-
-				 <?php }else{ ?>
-				 	<?php 
-				 	/*
-				 	$mysql = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' limit 1";
-					   $rs=$this->db->query($mysql);
-					   foreach($rs->result() as $r){
-					   	if($items['price'] == 1){
-					   		$harga=$r->harga_nonmember;
-					   		echo 'Rp. '.number_format($harga,2);
-
-					   }elseif(($items['price'] == 12)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='12' limit 1";
-					   		$b =$this->db->query($a);
-					   		foreach($b->result() as $c){
-					   			$harga=$c->harga_nonmember;
-					   		echo 'Rp. '.number_format($harga,2);
-					   		}
-						}elseif(($items['price'] == 20)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='20' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$harga=$f->harga_nonmember;
-					   		echo 'Rp. '.number_format($harga,2);
-					   		}
-						}elseif(($items['price'] == 6)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='6' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$harga=$f->harga_nonmember;
-					   		echo 'Rp. '.number_format($harga,2);
-					   		}
-						}
-					   } */
-
-					   $j = $items['price'];
-					   $kd = $v->kode_produk;
-					   $sql = "SELECT * FROM tbl_satuan WHERE kode_produk='$kd' AND jenis='$j' LIMIT 1 ";
-					   $hasil = $this->db->query($sql)->row();
-						$harga = $hasil->harga_nonmember;
-						echo 'Rp. '.number_format($harga,2);
-
-				 ?>
-				<input type="hidden" name="harga[]" value="<?php echo $harga ?>">
-
-				 <?php } ?>
-			</td>
-			<td>
-				<?php 
-					/*
-					$anu = "SELECT * from tbl_produk where kode_produk='$items[id]'";
-					$bebo =$this->db->query($anu);
-					foreach ($bebo->result() as $haha) {
-						$erer= $haha->berat *  $items['qty'];
-						//echo $erer;
-					}
-
-
-					if($items['price'] == 1){
-						$anu = "SELECT * from tbl_produk where kode_produk='$items[id]'";
-					$bebo =$this->db->query($anu);
-					foreach ($bebo->result() as $haha) {
-						
-						$erer= $haha->berat *  $items['qty'] * 1;
-						echo $erer;
-					}
-					}elseif(($items['price'] == 12)){
-						$anu = "SELECT * from tbl_produk where kode_produk='$items[id]'";
-					$bebo =$this->db->query($anu);
-					foreach ($bebo->result() as $haha) {
-						
-						$erer= $haha->berat *  $items['qty'] * 12;
-						echo $erer;
-					}
-					}elseif(($items['price'] == 20)){
-						$anu = "SELECT * from tbl_produk where kode_produk='$items[id]'";
-					$bebo =$this->db->query($anu);
-					foreach ($bebo->result() as $haha) {
-						
-						$erer= $haha->berat *  $items['qty'] * 20;
-						echo $erer;
-			
-					}
-					}elseif(($items['price'] == 6)){
-						$anu = "SELECT * from tbl_produk where kode_produk='$items[id]'";
-					$bebo =$this->db->query($anu);
-					foreach ($bebo->result() as $haha) {
-						
-						$erer= $haha->berat *  $items['qty'] * 6;
-						echo $erer;
-			
-					}
-					} */
-
-					$kd = $items[id];
-					$j = $items['price'];
-					$sql = "SELECT * from tbl_produk where kode_produk='$kd'";
-					$hasil = $this->db->query($sql)->row();
-					$berat = $hasil->berat * $items['qty'] * $j;
-					echo $berat;
-
-
-				 ?>
-			</td>
-
-			<td>
-				
-				<?php if($this->session->userdata('kode_member')){ ?>
-				<?php
-				/*
-				 $mysql = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' limit 1";
-					   $rs=$this->db->query($mysql);
-					   foreach($rs->result() as $r){
-					   	if($items['price'] == 1){
-					   		$hasil=$items['qty'] * $v->harga_member;
-					   			echo 'Rp. '.number_format($hasil,2);
-					   		
-					   }elseif(($items['price'] == 12)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='12' limit 1";
-					   		$b =$this->db->query($a);
-					   		foreach($b->result() as $c){
-					   			$j=$c->harga_member * 12;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   			
-					   		}
-						}elseif(($items['price'] == 20)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='20' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $c){
-					   			$j=$c->harga_member * 20;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   		}
-						}elseif(($items['price'] == 6)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='6' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $c){
-					   			$j=$c->harga_member * 6;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   		}
-						}
-					   } */
-					$j = $items['price'];
-					$kd = $v->kode_produk; 
-					$sql = " SELECT * from tbl_satuan where kode_produk='$kd' and jenis='$j' limit 1 ";
-					$hasil = $this->db->query($sql)->row();
-					$x = $hasil->harga_member * $j ;
-					$hasil = $x * $items['qty'];
-					echo 'Rp. '.number_format($hasil,2);
-
-				 ?>
-				<input type="hidden" name="total[]" value="<?php echo $hasil ?>">
-
-				 <?php }else{ ?>
-				 	<?php
-				 	/*
-				 	 $mysql = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' limit 1";
-					   $rs=$this->db->query($mysql);
-					   foreach($rs->result() as $r){
-					   	if($items['price'] == 1){
-					   		 $hasil=$items['qty']* $r->harga_nonmember;
-					   			echo 'Rp. '.number_format($hasil,2);
-					   		 
-					   }elseif(($items['price'] == 12)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='12' limit 1";
-					   		$b =$this->db->query($a);
-					   		foreach($b->result() as $c){
-					   			$j=$c->harga_nonmember * 12;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   			
-					   		}
-						}elseif(($items['price'] == 20)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='20' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$j=$f->harga_nonmember * 20;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   			
-					   		}
-						}elseif(($items['price'] == 6)){
-							$a = "SELECT * from tbl_satuan where kode_produk='$v->kode_produk' and jenis='6' limit 1";
-					   		$e =$this->db->query($a);
-					   		foreach($e->result() as $f){
-					   			$j=$f->harga_nonmember * 6;
-					   			$hasil = $j * $items['qty'];
-					   			echo 'Rp. '.number_format($hasil,2);
-					   			
-					   		}
-						}
-					   } */
-					   $j = $items['price'];
-					$kd = $v->kode_produk;
-					$sql = " SELECT * from tbl_satuan where kode_produk='$kd' and jenis='$j' limit 1 ";
-					$hasil = $this->db->query($sql)->row();
-					$x = $hasil->harga_nonmember * $j ;
-					$hasil = $x * $items['qty'];
-					echo 'Rp. '.number_format($hasil,2);
-				 ?>
-				<input type="hidden" name="total[]" value="<?php echo $hasil ?>">
-
-				 <?php } ?>
-			</td><!-- 
-			<td><?php $jumlah = $items['qty'] * $v->harga_member; echo $jumlah; ?></td> -->
-			<td>
-				<a href="<?php echo base_url(); ?>index.php/web/hapus_cart/<?php echo $items['rowid']; ?>">x</a>
-			</td>
-		  </tr>
-		 <?php 
-
-		               
-		                 
-		                  $total+=$hasil;
-		                  $total_berat+=$berat;
-		                
-
-		 ?>
-	
-		 <?php endforeach; ?>
-		 <tr>
-		 	<td colspan="5"><b><h4>TOTAL</h4></b></td>
-		 	<td>
-		 		<?php 
-					   			echo ceil($total_berat);
-
-		 		 ?>
-		 	</td>
-		 	
-		 	<td>
-		 		<?php 
-					   			echo 'Rp. '.number_format($total,2);
-
-		 		 ?>
-		 	</td>
-		 	<td>
-		 		<a href="index.php/web" class="btn btn-success">Belanja Lagi</a>
-		 	</td>
-		 </tr>
-	</table>
-	<script type="text/javascript">
-
-function fetch_select(val)
-{
-   $.ajax({
-     type: 'post',
-     url: '<?php echo base_url() ?>index.php/ci_admin/fetch_data_p',
-     data: {
-       get_val:val
-     },
-     success: function (response) {
-       document.getElementById("new_select").innerHTML=response; 
-       document.getElementById("new_selectb").innerHTML=response; 
-       
-     }
-   });
-}
-
-</script>
-	<div class="register"> 
-	<?php if($this->session->userdata('kode_member')){ ?>
- <?php $kode_member  = $this->session->userdata('kode_member');
- 	   $datasql      = "SELECT * from tbl_member where kode_member='$kode_member'";
- 	   $rsql         = $this->db->query($datasql);
- 	   foreach ($rsql->result() as $key) {
- 	   	?>
-				<div class="register-but"> 
-				 <div class="col-md-6  register-top-grid"> 
-					
-					<div class="mation"> 
-						<span>Provinsi</span> 
-
-						 <select onchange="fetch_select(this.value);" class="form-control">
-           <option>
-              Pilih Kategori
-           </option>
-           
-           <?php
-             $host = 'localhost';
-             $user = 'root';
-             $pass = '';
-           
-             mysql_connect($host, $user, $pass);
-
-             mysql_select_db('dbrainkids');
-           
-             $select=mysql_query("SELECT * from tbl_provinsi ");
-             while($row=mysql_fetch_array($select))
-             {
-              ?><option value="<?php echo $row['id_provinsi'] ?>"><?php echo $row['provinsi'] ?></option>";
-
-              <?php
-             }
-           ?>
-
-         </select>
-        
-         
-						<span>Kota</span> 
-						
-						<select id="new_select" name="id_kota" class="form-control">
-                      </select>
- 							
-						<span>Nama</span> 
-						<input type="text" name="nama" disabled="disabled" value="<?php echo $key->nama_member ?>"> 
-						<input type="hidden" name="nama" value="<?php echo $key->nama_member ?>"> 
-					
-						<span>Email</span> 
-						<input type="text" name="email" disabled="disabled" value="<?php echo $key->email_member ?>"> 
-						<input type="hidden" name="email" value="<?php echo $key->email_member ?>"> 
- 
- 							
-					 	<span>No Hp</span> 
-						<input type="text" name="no_hp" disabled="disabled" value="<?php echo $key->no_hp ?>"> 
-						<input type="hidden" name="no_hp" value="<?php echo $key->no_hp ?>"> 
-					 
-						 <span>Alamat</span> 
-						<textarea style="margin-left: 0px; margin-right: 0px; width: 1132px; margin-top: 0px; margin-bottom: 0px; height: 105px; " name="alamat_member" required="Harap Di isi"><?php echo $key->alamat_member ?></textarea> 
-						 <span>Keterangan Tambahan</span> 
-
-						<textarea style="margin-left: 0px; margin-right: 0px; width: 1132px; margin-top: 0px; margin-bottom: 0px; height: 105px; " name="ket_tambah"></textarea> 
-					</div> 
-					 <div class="clearfix"> </div> 
-					   
-					 </div> 
-				     <div class=" col-md-6 register-bottom-grid"> 
-						    
-								<t<div class="mation"> 
-								<table border="1">
-									<tr>
-										<td>Sub Total </td>
-										<td><?php echo 'Rp. ' .number_format($total,2); ?> </td>
-									</tr>
-									<tr>
-										<td>Jumlah Item </td>
-										<td><?php  $h=$item++; echo $h-1;  ?> Item </td>
-									</tr>
-									<tr>
-										<td>Total Berat </td>
-										<td><?php echo ceil($total_berat) ?></td>
-										<input type="hidden" name="total_berat" value="<?php echo ceil($total_berat) ?>">
-									</tr>
-									<tr>
-										<td>Area Kirim </td>
-										<td>
-											<select id="new_selectb" name="ongkir" class="form-control">
-
-                     						 </select>
- 							
-										</td>
-									</tr>
-									<tr>
-										<td style="color:green">Grand Total</td>
-										<td style="color:green"><?php echo 'Rp. ' .number_format($total,2); ?></td>
-									</tr>
-								</table>
-								<p style="color:red">
-									Keterangan : Grand Total belum termasuk ongkos kirim
-								</p>
-							</div> 
-							</div> 
-					 </div> 
- 	   	<?php
- 	   }
- 	    ?>
-					<!-- form data -->
-					<?php  $kode_member  = $this->session->userdata('kode_member');
-					//echo $kode_member; ?>
-	<input type="hidden" name="kode_member" value="<?php echo $kode_member ?>">
-	<input type="hidden" name="invoice" value="<?php echo $kodeunik ?>">
-	<input type="hidden" name="totalbelanja" value="<?php echo $total ?>">
-
-					 <div class="clearfix"> </div> 
-
-						
-				
-					   &nbsp;&nbsp;&nbsp;<input type="submit" value="Selesai Belanja" class="btn btn-success"> 
-					   <div class="clearfix"> </div> 
-				   </form> 
-
-
-				   <?php }else{ ?>
-<div class="register-but"> 
-				 <div class="col-md-6  register-top-grid"> 
-					
-					<div class="mation"> 
-						<span>Provinsi</span> 
-
-						 <select onchange="fetch_select(this.value);" class="form-control">
-           <option>
-              Pilih Kategori
-           </option>
-           
-           <?php
-             $host = 'localhost';
-             $user = 'root';
-             $pass = '';
-           
-             mysql_connect($host, $user, $pass);
-
-             mysql_select_db('dbrainkids');
-           
-             $select=mysql_query("SELECT * from tbl_provinsi ");
-             while($row=mysql_fetch_array($select))
-             {
-              ?><option value="<?php echo $row['id_provinsi'] ?>"><?php echo $row['provinsi'] ?></option>";
-
-              <?php
-             }
-           ?>
-
-         </select>
-        
-         
-						<span>Kota</span> 
-						
-						<select id="new_select" name="id_kota" class="form-control">
-                      </select>
-					
-						<span>Nama</span> 
-						<input type="text" name="nama" value=""> 
-					
-						<span>Email</span> 
-						<input type="text" name="email" value=""> 
- 
-					 	<span>No Hp</span> 
-						<input type="text" name="no_hp" value=""> 
-					 
-						 <span>Alamat</span> 
-						<textarea style="margin-left: 0px; margin-right: 0px; width: 1132px; margin-top: 0px; margin-bottom: 0px; height: 105px; " name="alamat_member" required="Harap Di isi"></textarea> 
-					</div> 
-					 <div class="clearfix"> </div> 
-					   
-					 </div> 
-				     <div class=" col-md-6 register-bottom-grid"> 
-						   
-							<div class="mation"> 
-								<table border="1">
-									<tr>
-										<td>Sub Total </td>
-										<td><?php echo 'Rp. ' .number_format($total,2); ?> </td>
-									</tr>
-									<tr>
-										<td>Jumlah Item </td>
-										<td><?php  $h=$item++; echo $h-1;  ?> Item </td>
-									</tr>
-									<tr>
-										<td>Total Berat </td>
-										<td><?php echo ceil($total_berat) ?></td>
-										<input type="hidden" name="total_berat" value="<?php echo ceil($total_berat) ?>">
-									</tr>
-									<tr>
-										<td>Area Kirim </td>
-										<td>
-											<select id="new_selectb" name="ongkir" class="form-control">
-
-                     						 </select>
- 							
-										</td>
-									</tr>
-									<tr>
-										<td style="color:green">Grand Total</td>
-										<td style="color:green"><?php echo 'Rp. ' .number_format($total,2); ?></td>
-									</tr>
-								</table>
-								<p style="color:red">
-									Keterangan : Grand Total belum termasuk ongkos kirim
-								</p>
-							</div> 
-					 </div> 
-					 <div class="clearfix"> </div> 
-
-					<!-- form data -->
-	<input type="hidden" name="kode_member" value="">
-	<input type="hidden" name="invoice" value="<?php echo $kodeunik ?>">
-	<input type="hidden" name="totalbelanja" value="<?php echo $total ?>">
-	 <div class="col-md-6  register-top-grid"> 
-					
-					<div class="mation"> 
-						 <span>Keterangan Tambahan</span> 
-
-						<textarea style="margin-left: 0px; margin-right: 0px; width: 1132px; margin-top: 0px; margin-bottom: 0px; height: 105px; " name="ket_tambah"></textarea> 
-					   <input type="submit" value="Selesai Belanja" class="btn btn-success"> 
-
-
-				
- 	   	<?php
- 	   }
- 	    ?>
-					   <div class="clearfix"> </div> 
-
- 	    <p style="color:red">Kepada Pelanggan yang terhormat, untuk jumlah yang harus di transfer, yaitu total nilai belanja + ongkos kirim akan di kirim invoicenya via email pelanggan, Terima Kasih</p>
-				   </form> 
-						</div>
-						</div>
-				</div> 
-		   </div> 
-	
+                                </td>
+                            </tr>
+                        <?php } ?>
+                         </tbody>
+                    </table>
+                </div>
+                    <table style="float:right;text-align:left;" width="40%">
+                        <tr>
+                            <th>Sub Total : </th>
+                            <td>Rp. <?php echo $this->cart->format_number($this->cart->total()) ?></td>
+                        </tr>
+                        <tr>
+                            <th>Ongkir : </th>
+                            <td>Rp. 
+                                <?php
+                                $total = $this->cart->total();
+                                $tax = (10000);
+                                echo $this->cart->format_number($tax);
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Grand Total :</th>
+                            <td>Rp. <?php echo $this->cart->format_number($tax + $this->cart->total()); ?> </td>
+                        </tr>
+                    </table>
+                    <?php
+                } else {
+                    echo "<h1>Your Cart Empty</h1>";
+                }
+                ?>
+            </div>
+        </div>
     </div>
 </div>
+            <div class="shopping">
+                <div class="shopleft">
+                    <a href="<?php echo base_url('home') ?>"> <img src="<?php echo base_url() ?>assets/images/shop.png" alt="" /></a>
+                </div>
+                <div class="shopright">
+                    <?php
+                    $customer_id = $this->session->userdata('customer_id');
+                    if (empty($customer_id)) {
+                        ?>
+                        <a href="<?php echo base_url('home/user_form') ?>"> <img src="<?php echo base_url() ?>assets/images/check.png" alt="" /></a>
+                        <?php
+                    } elseif (!empty($customer_id)) {
+                        ?>
+                        <a href = "<?php echo base_url('home/customer_shipping') ?>"> <img src = "<?php echo base_url() ?>assets/images/check.png" alt = "" /></a>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>      
+       
+    </div>
+</div>
+</div>
+ <div class="clear"></div>
+</section>

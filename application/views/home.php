@@ -28,7 +28,7 @@
 
                                  ?>
                                                 <span>Jumlah Produk</span>
-                                                 <a href="<?php echo base_url('Admin/produk')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                 <a href="<?php echo base_url('admin/produk')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -43,7 +43,7 @@
                                             </div>
                                             <div class="text">
                                                <?php 
-                                    $sql = "SELECT * FROM tbl_cart ";
+                                    $sql = "SELECT * FROM tbl_order ";
                                     $rs = $this->db->query($sql);
                                     $jum = $rs->num_rows();
                                     echo '<h2 style="color:red">'.$jum.'</h2>';
@@ -51,7 +51,7 @@
                                  ?>
                                                 <span>New Order</span>
 
-                                                 <a href="<?php echo base_url('Admin/order')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                                                 <a href="<?php echo base_url('admin/order')?>" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +66,7 @@
                                             </div>
                                             <div class="text">
                                               <?php 
-                                    $sql = "SELECT * FROM tbl_member ";
+                                    $sql = "SELECT * FROM tbl_customer ";
                                     $rs = $this->db->query($sql);
                                     $jum = $rs->num_rows();
                                     echo '<h2 style="color:red">'.$jum.'</h2>';
@@ -94,6 +94,5 @@
             <!-- END MAIN CONTENT-->
             <!-- END PAGE CONTAINER-->
         </div>
-
     </div>
-  <
+  </section>

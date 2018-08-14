@@ -21,7 +21,7 @@ class Admin extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/topbar');
         $this->load->view('template/sidebar');
-        $this->load->view('home',$datas);
+        $this->load->view('home',$data);
         $this->load->view('template/footer');
         }
         function produk(){

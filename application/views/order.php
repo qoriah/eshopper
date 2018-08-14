@@ -11,11 +11,10 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Invoice</th>
-                                                <th>Member</th>
-                                                <th>Email</th>
-                                                <th>No Hp</th>
-                                                <th>Total</th>
+                                                <th>ID customer</th>
+                                                <th>ID Shipping</th>
+                                                <th>ID Payment</th>
+                                                <th>Total Order</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -26,22 +25,12 @@
                                             ?>
                                         <tr>
                                         <td><?php echo $no++ ?></td>
-                                        <td><?php echo $u->invoice ?></td>
-                                        <td><?php 
-                                            if($u->kode_member == NULL){
-                                              ?>
-                                              <b class="btn btn-danger btn-rounded waves-effect waves-light">Non Member</b>
-                                              <?php
-                                            }else{
-                                              ?>
-                                              <b class="btn btn-success btn-rounded waves-effect waves-light">Member</b>
-
-                                              <?php
-                                            }
+                                        <td><?php echo $u->customer_id ?></td>
+                                        <td><?php echo $u->shipping_id ?>
                                          ?></td>
-                                        <td><?php echo $u->email ?></td>
-                                        <td><?php echo $u->no_hp ?></td>
-                                        <td><?php echo $u->total ?></td>
+                                        <td><?php echo $u->payment_id ?></td>
+                                        <td><?php echo $u->order_total ?></td>
+                                        <td><?php echo $u->actions ?></td>
                                         <td>
                                             <div class="table-data-feature">
                                           <a href="<?php echo base_url().'#'.$row->id_user ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit" ><i class="zmdi zmdi-edit"></i></a>

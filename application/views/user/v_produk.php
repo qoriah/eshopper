@@ -16,10 +16,10 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<a href="home/detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" />
-											<h4><?php echo $row->judul ?></h4>
+											<a href="detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
+											<h4><a href="detail/<?php echo $row->kode_produk ?>"><?php echo $row->judul ?></h4>
 											<p class="uang"><?php echo $row->harga ?></p>
-											<a href="" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="detail/<?php echo $row->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 								</div>
 							</div>
@@ -39,10 +39,10 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<a href="home/detail/<?php echo $view->kode_produk ?>"><img src="<?php echo base_url($view->gambar1) ?>" alt="" style="width: 200px; height: 250px;" />
-											<h4><?php echo $view->judul ?></h4>
+											<a href="detail/<?php echo $view->kode_produk ?>"><img src="<?php echo base_url($view->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
+											<h4><a href="detail/<?php echo $row->kode_produk ?>"><?php echo $view->judul ?></h4>
 											<p class="uang"><?php echo $view->harga ?></p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="detail/<?php echo $view->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 								</div>
 							</div>
@@ -63,13 +63,13 @@
 								<div class="single-products">
 									<form action="home/cart" method="post">
 										<div class="productinfo text-center">
-											<a href="home/detail/<?php echo $view->kode_produk ?>"><img src="<?php echo base_url($view->gambar1) ?>" alt="" style="width: 200px; height: 250px;" />
+											<a href="home/detail/<?php echo $view->kode_produk ?>"><img src="<?php echo base_url($view->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
 										
 											<h4><?php echo $view->judul ?></h4>
 											<p class="uang"><?php echo $view->harga ?></p>
 											<input type="hidden" name="kode_produk" value="<?php echo $row->kode_produk ?>">
 											<input type="hidden" name="jumlah_beli" value="1">
-											<a href="<?php echo base_url('home/cart'); ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											<a href="home/detail/<?php echo $view->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 								</div>
 							</div>

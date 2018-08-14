@@ -72,17 +72,14 @@
 							<div class="product-image-wrapper">
 								<div class="single-products">
 										<div class="productinfo text-center">
-											<input type="hidden" name="kode_produk" value="<?php echo $row->kode_produk ?>"> 
 											<a href="home/detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
 											<a href="home/detail/<?php echo $row->kode_produk ?>"><h4><?php echo $row->judul ?></h4></a>
-											<p class="uang"><?php echo $row->harga ?></p>
-										<div class="col-md-5">
-									<input type="number" name="quantity" id="<?php echo $row->kode_produk;?>" value="1" class="quantity form-control">
+											<p name="harga" class="uang"><?php echo $row->harga ?></p>
+									<a href="home/detail/<?php echo $row->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
-											<a href="<?php echo base_url('home/cart'); ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-										</div>
 								</div>
 							</div>
+						</form>
 						</div>
 						<?php
 							} ?>
@@ -100,10 +97,8 @@
 											<a href="home/detail/<?php echo $row->kode_produk ?>"><img src="<?php echo base_url($row->gambar1) ?>" alt="" style="width: 200px; height: 250px;" /></a>
 											<a href="home/detail/<?php echo $row->kode_produk ?>"><h4><?php echo $row->judul ?></h4></a>
 											<p class="uang"><?php echo $row->harga ?></p>
-											<div class="col-md-5">
-											<input type="number" name="quantity" id="<?php echo $row->kode_produk;?>" value="1" class="quantity form-control">
-											</div>
-											<a href="<?php echo base_url('home/cart'); ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+											
+											<a href="home/detail/<?php echo $row->kode_produk ?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 										</div>
 								</div>
 							</div>

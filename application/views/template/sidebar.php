@@ -8,8 +8,8 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="<?php if($this->uri->segment('2') == 'admin'){ echo "active" ; } ?>">
-                            <a href="<?php echo site_url('admin') ?>"><i class="fas fa-home"></i>Home</a> 
+                        <li class="<?php if($this->uri->segment('2') == ''){ echo "active" ; } ?>">
+                            <a href="<?php echo site_url('admin/index') ?>"><i class="fas fa-home"></i>Home</a> 
                         </li>
                         <li class="<?php if($this->uri->segment('2') == '' || $this->uri->segment('2') == 'produk' || $this->uri->segment('2') == 'tambahproduk'|| $this->uri->segment('2') == 'editproduk'){ echo "active" ; } ?>">
                             <a href="<?php echo site_url('admin/produk') ?>"><i class="fas fa-table"></i>Master</a> 

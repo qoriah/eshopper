@@ -25,6 +25,32 @@ protected $data=array();
 		
 		return $data;
 	}
+	function getkodeinvoice($table) { 
+        $q = $this->db->query("SELECT MAX(RIGHT(invoice,4)) AS idmax FROM ".$table);
+        $kd = ""; //kode awal
+        if($q->num_rows()>0){ //jika data ada
+            foreach($q->result() as $k){
+                $tmp = ((int)$k->idmax)+1; //string kode diset ke integer dan ditambahkan 1 dari kode terakhir
+                $kd = sprintf("%04s", $tmp); //kode ambil 4 karakter terakhir
+            }
+        }else{ //jika data kosong diset ke kode awal
+            $kd = "0001";
+        }
+        $kar = "INC"; //karakter depan kodenya
+        //gabungkan string dengan kode yang telah dibuat tadi
+        return $kar.$kd;
+   } 
+     public function get_product_by_id($kode_produk) {
+        $this->load->library('database_library');
+		
+		$sql="SELECT tbl_produk.kode_produk, tbl_produk.judul, tbl_produk.penulis, tbl_produk.penerbit, tbl_produk.harga, tbl_produk.gambar1, tbl_kategori.nama_kategori from tbl_produk LEFT JOIN  tbl_kategori ON tbl_kategori.nama_kategori=tbl_produk.nama_kategori where tbl_produk.kode_produk='$kode_produk'";
+		$datas=$this->database_library->QueryData($sql);
+		
+		$data['results']=$datas;
+		
+		return $data;
+    }
+
 	function tambahstok($data){
 		$this->db->insert('tbl_stok',$data);		
 	}
@@ -83,6 +109,20 @@ protected $data=array();
         //gabungkan string dengan kode yang telah dibuat tadi
         return $kar.$kd;
    } 
+    function save_customer_info($data) {
+        $this->db->insert('tbl_customer',$data);
+    }
+    public function get_customer_info($data) {
+        $this->db->select('*');
+        $this->db->from('tbl_customer');
+        $this->db->where($data);
+        $info = $this->db->get();
+        return $info->row();
+    }
+     public function save_shipping_address($data) {
+        $this->db->insert('tbl_shipping', $data);
+    }
+
  	function tambahproduk($data){
 		$this->db->insert('tbl_produk',$data);		
 	}

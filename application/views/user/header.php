@@ -15,10 +15,8 @@
     <link href="<?php echo base_url('assets');?>/css/animate.css" rel="stylesheet">
 	<link href="<?php echo base_url('assets');?>/css/main.css" rel="stylesheet">
 	<link href="<?php echo base_url('assets');?>/css/responsive.css" rel="stylesheet">
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="js/respond.min.js"></script>
-    <![endif]-->       
+	 <link href="<?php echo base_url('');?>/css/font-face.css" rel="stylesheet" media="all">
+    <link href="<?php echo base_url('');?>/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">     
     <link rel="shortcut icon" href="images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url('images/ico/apple-touch-icon-144-precomposed.png')?>">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url('images/ico/apple-touch-icon-114-precomposed.png')?>">
@@ -41,13 +39,7 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-							</ul>
+						
 						</div>
 					</div>
 				</div>
@@ -66,8 +58,9 @@
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
 								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+								<li><a href="<?php echo site_url('home/cart') ?>"><i class="fa fa-shopping-cart"></i><span class="cart_title">Cart</span>
+                            <span class="no_product">(<?php echo $this->cart->total_items();?> Items)</span></a></li>
+								<li><a href="<?php echo site_url('home/login') ?>"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>
@@ -89,23 +82,52 @@
 						</div>
 						<div class="mainmenu pull-left">
 							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="<?php echo site_url('home') ?>" class="active">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="<?php echo site_url('home/allproduk') ?>">Products</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html">Login</a></li> 
+								<li class="<?php
+                if ($this->uri->uri_string() == '') {
+                    echo "active";
+                }
+                ?>"><a href="<?php echo base_url('/'); ?>">Home</a></li>
+                <li class="<?php
+                if ($this->uri->uri_string() == 'produk') {
+                    echo "active";
+                }
+                ?>"><a href="<?php echo base_url('home/allproduk'); ?>">Products</a> </li>
+                    <?php if ($this->cart->total_items()) { ?>
+                    <li class="<?php
+                    if ($this->uri->uri_string() == 'cart') {
+                        echo "active";
+                    }
+                    ?>"><a href="<?php echo base_url('home/cart'); ?>">Cart</a></li>
+                    <?php } ?>
+                
+                <?php if(!$this->session->userdata('customer_id')){?>
+                
+                <li class="<?php
+                if ($this->uri->uri_string() == 'customer/login') {
+                    echo "active";
+                }
+                ?>"><a href="<?php echo base_url('home/customer_login'); ?>">Login</a> </li>
+                <li class="<?php
+                if ($this->uri->uri_string() == 'customer/register') {
+                    echo "active";
+                }
+                ?>"><a href="<?php echo base_url('home/customer_register'); ?>">Register</a> </li>
+                
+                <?php }?>
+                
                                     </ul>
                                 </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
+								
 							</ul>
 						</div>
 					</div>
 					<div class="col-sm-3">
 						<div class="search_box pull-right">
+							 <form method="get" action="<?php echo base_url('search')?>">
 							<input type="text" placeholder="Search"/>
+							 <button type="submit" value="SEARCH" class="btn btn-primary btn-sm"> Search
+                 </button>
+             </form>
 						</div>
 					</div>
 				</div>
